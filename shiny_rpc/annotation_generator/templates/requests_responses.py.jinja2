@@ -1,0 +1,46 @@
+from datetime import date, datetime
+from uuid import UUID
+
+from shiny_rpc.schema import BasePayloadSchema
+
+
+{% if dto.enums %}
+from .enums import (
+    {% for key in dto.enums.keys() %}
+    {{ key }}Enum,
+    {% endfor %}
+)
+{% endif %}
+{% if dto.objects %}
+from .dtos import (
+    {% for key in dto.objects.keys() %}
+    {{ key }}DTO,
+    {% endfor %}
+)
+{% endif %}
+{% if is_request %}
+from .base import BaseRequest
+{% else %}
+from .base import BaseResponse
+{% endif %}
+
+
+{% for name, instance in dto.methods.items() %}
+{% if is_request %}
+class {{ to_camel_case(name) }}Request(BaseRequest):
+    class PayloadSchema(BasePayloadSchema):
+        {% for element_name, element_value in instance.request.items() %}
+        {{ element_name }}: {{ element_value.render() }}
+        {% endfor %}
+
+
+{% else %}
+class {{ to_camel_case(name) }}Response(BaseResponse):
+    class PayloadSchema(BasePayloadSchema):
+        {% for element_name, element_value in instance.response.items() %}
+        {{ element_name }}: {{ element_value.render() }}
+        {% endfor %}
+
+
+{% endif %}
+{% endfor %}

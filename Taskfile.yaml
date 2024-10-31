@@ -1,0 +1,18 @@
+version: '3'
+
+tasks:
+  lint:
+    cmds:
+     - poetry run ruff check . --fix --show-fixes
+     - poetry run mypy .
+     - poetry run isort .
+
+  test:
+    cmds:
+      - poetry run pytest tests/
+
+
+  make-example-todo-list:
+    cmds:
+      - poetry run python3 -m shiny_rpc.annotation_generator.main -m full -a examples/todo_list_annotation.json -t examples/todo_list_generated
+      - task: lint

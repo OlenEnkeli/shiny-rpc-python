@@ -1,0 +1,18 @@
+from shiny_rpc.message_hander import MessageHandler
+
+from . import (
+    {% for name in dto.methods.keys() %}
+    {{ name }},
+    {% endfor %}
+)
+
+
+handler = MessageHandler()
+
+
+{% for name in dto.methods.keys() %}
+handler.add_method(
+    method_name='{{ name }}',
+    func={{ name }},  # type:ignore[arg-type]
+)
+{% endfor %}

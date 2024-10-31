@@ -1,0 +1,22 @@
+from datetime import date, datetime
+from uuid import UUID
+
+from shiny_rpc.schema import BaseSchema
+
+{% if dto.enums %}
+from .enums import (
+    {% for name in dto.enums.keys() %}
+    {{ name }}Enum,
+    {% endfor %}
+)
+{% endif %}
+
+
+{% for name, instance in dto.objects.items() %}
+class {{ name }}DTO(BaseSchema):
+    {% for element_name, element_value in instance.items() %}
+    {{ element_name }}: {{ element_value.render() }}
+    {% endfor %}
+
+
+{% endfor %}

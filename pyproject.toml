@@ -1,0 +1,76 @@
+[tool.poetry]
+name = "shiny_rpc"
+version = "0.1.0"
+description = "Minimalistic RPC standard for your microservices"
+authors = ["anton <me@anton-nikolskiy.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+orjson = "^3.10.7"
+pydantic = "^2.9.2"
+rich = "^13.9.2"
+jinja2 = "^3.1.4"
+sqlalchemy = "^2.0.36"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.6.3"
+mypy = "^1.11.2"
+isort = "^5.13.2"
+pytest = "^8.3.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+line_length = 120
+force_grid_wrap = 3
+
+[tool.ruff]
+src = ["src", "tests", "examples"]
+target-version = "py312"
+lint.select = ["ALL"]
+lint.ignore = [
+    "E501",    # line too long, handled by black
+    "B008",    # do not perform function calls in argument defaults
+    "C901",    # too complex
+    "W191",    # indentation contains tabs
+    "FA102",   # Missing `from __future__ import annotations`, but uses ...
+    "PLR0913", # Too many arguments in function definition
+    "D107",    # Missing docstring in `__init__`
+    "ANN101",  # Missing type annotation for `self` in method
+    "ANN102",  # Missing type annotation for `cls` in method
+    "PLR0912", # Too many branches (16 > 12)
+    "D100",    # Missing docstring in public module
+    "D101",    # Missing docstring in public class
+    "D102",    # Missing docstring in public method
+    "D103",    # Missing docstring in public function
+    "D104",    # Missing docstring in public package
+    "D105",    # Missing docstring in magic method
+    "D211",    # No blank line before class
+    "D212",    # Multi line summary second line
+    "D401",    # First line of docstring should be in imperative mood
+    "FA100",   # Add `from __future__ import annotations` to simplify `typing.Type`
+    "G004",    # Logging statement uses f-string
+    "D300",    # Convert to triple double quotes
+    "D106",    # Missing docstring in public nested class
+    "EM102",   # Exception must not use an f-string literal, assign to variable first
+    "PYI051",  # Literal['int'] is redundant in a union with `str`
+    "TRY401",  # Redundant exception object included in `logging.exception` call
+    "INP001",  # File `path` is part of an implicit namespace package. Add an `__init__.py`.
+]
+format.quote-style = "single"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "SLF001", "PLR0913", "S311"]
+
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
+multiline-quotes = "single"
+
+[tool.mypy]
+ignore_missing_imports=true
+check_untyped_defs=true

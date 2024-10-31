@@ -1,0 +1,39 @@
+from shiny_rpc.client import BaseClient
+
+from .requests import (
+    {% for name in dto.methods.keys() %}
+    {{ to_camel_case(name) }}Request,
+    {% endfor %}
+)
+from .responses import (
+    {% for name in dto.methods.keys() %}
+    {{ to_camel_case(name) }}Response,
+    {% endfor %}
+)
+
+
+
+class Client(BaseClient):
+    {% for name in dto.methods.keys() %}
+    async def {{ name }}(
+        self,
+        payload: {{ to_camel_case(name) }}Request.PayloadSchema,
+        headers: {{ to_camel_case(name) }}Request.HeadersSchema | None = None,
+    ) -> {{ to_camel_case(name) }}Response:
+        return await self.send(  # type:ignore[return-value]
+            {{ to_camel_case(name) }}Request(
+                method_name='{{ name }}',
+                payload=payload,
+                headers=headers,
+            )
+        )
+
+    {% endfor %}
+
+
+# WARNING! It`s just example. Please, use some settings class for client bootstrapping.
+
+client = Client(
+    host='127.0.0.1',
+    port=7777,
+)

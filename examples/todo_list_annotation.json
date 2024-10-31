@@ -1,0 +1,137 @@
+{
+  "enums": {
+    "TaskType": {
+      "SIMPLE": "simple",
+      "PERCENT": "percent"
+    }
+  },
+
+  "objects": {
+    "Task": {
+      "id": "int",
+      "task_list_id": "int",
+      "task_type": ["TaskType"],
+      "is_completed": "boolean",
+      "title": "string",
+      "text": ["string", "null"],
+      "created_at": "datetime",
+      "completed_at": ["datetime", "null"],
+      "completion_percent": ["float", "null"],
+      "create_by_service": ["uuid", "null"]
+    },
+
+    "TodoList": {
+      "id": "int",
+      "title": "string",
+      "text": "string",
+      "created_at": "datetime",
+      "user_id": "int",
+      "is_closed": "boolean",
+      "is_favourite": "boolean",
+      "create_by_service": ["uuid", "null"]
+    }
+  },
+
+  "headers": {
+    "service_id": "uuid"
+  },
+
+  "methods": {
+    "create_todo_list": {
+      "request": {
+        "title": "string",
+        "text": "string",
+        "user_id": "int"
+      },
+
+      "response": {
+        "list": "TodoList"
+      }
+    },
+
+    "get_todo_list": {
+      "request": {
+        "id": "int"
+      },
+
+      "response": {
+        "list": "TodoList"
+      }
+    },
+
+    "update_todo_list": {
+      "request": {
+        "id": "int",
+        "title": "string",
+        "text": "string"
+      },
+
+      "response": {
+        "list": "TodoList"
+      }
+    },
+
+    "delete_todo_list": {
+      "request": {
+        "id": "int",
+        "title": "string",
+        "text": "string"
+      },
+
+      "response": {
+        "list": "TodoList"
+      }
+    },
+
+    "create_task": {
+      "request": {
+        "task_list_id": "int",
+        "task_type": ["TaskType"],
+        "title": "string",
+        "text": ["string", "null"]
+      },
+      "response": {
+        "task": "Task"
+      }
+    },
+
+    "update_task": {
+      "request": {
+        "task_id": "int",
+        "title": "string",
+        "text": ["string", "null"]
+      },
+      "response": {
+        "task": "Task"
+      }
+    },
+
+    "complete_task": {
+      "request": {
+        "task_id": "int"
+      },
+      "response": {
+        "task": "Task"
+      }
+    },
+
+    "increase_task_completion_percent": {
+      "request": {
+        "task_id": "int",
+        "delta": "float"
+      },
+      "response": {
+        "task": "Task"
+      }
+    },
+
+    "delete_task": {
+      "request": {
+        "task_id": "int"
+      },
+      "response": {
+        "task": "Task"
+      }
+    }
+  }
+}

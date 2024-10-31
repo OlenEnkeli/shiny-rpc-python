@@ -1,0 +1,11 @@
+from shiny_rpc.user import User
+
+from {{ package_name }}.requests import {{ to_camel_case(method_name) }}Request
+from {{ package_name }}.responses import {{ to_camel_case(method_name) }}Response
+
+
+async def {{ method_name }}(
+    request: {{ to_camel_case(method_name) }}Request,
+    user: User,
+) -> {{ to_camel_case(method_name) }}Response:
+    raise NotImplementedError

@@ -1,0 +1,11 @@
+from enum import Enum
+
+
+{% for name, instance in dto.enums.items() %}
+class {{ name }}Enum(str, Enum):
+    {% for element in instance %}
+    {{ element.name }} = '{{ element.value }}'
+    {% endfor %}
+
+
+{% endfor %}

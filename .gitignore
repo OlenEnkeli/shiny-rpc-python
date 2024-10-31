@@ -1,0 +1,17 @@
+# Python and dotenv
+.env
+env
+.venv
+venv
+*.pyc
+__pypackages__
+__pycach__
+.ruff_cache
+.mypy_cache
+
+# MacOS
+.DS_Store
+
+# IDE
+.idea
+.vscode

@@ -1,2 +1,3 @@
-# shiny-rpc-python
-Minimalistic RPC standard for your microservices
+# ✨ Shiny RPC
+
+> Minimalistic RPC standard for your microservices

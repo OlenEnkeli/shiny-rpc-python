@@ -1,0 +1,12 @@
+{% for name in dto.methods.keys() %}
+from .{{ name }} import {{ name }}
+{% endfor %}
+from .handler import handler
+
+
+__all__ = [
+    'handler',
+    {% for name in dto.methods.keys() %}
+    '{{ name }}',
+    {% endfor %}
+]

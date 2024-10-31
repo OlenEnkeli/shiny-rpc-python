@@ -1,0 +1,37 @@
+from datetime import date, datetime
+from uuid import UUID
+
+from shiny_rpc.schema import (
+    BasePayloadSchema,
+    BaseHeadersSchema,
+)
+from shiny_rpc.messages import (
+    Request,
+    Response,
+)
+
+
+{% if dto.headers %}
+class CommonHeadersSchema(BaseHeadersSchema):
+    {% for name, value in dto.headers.items() %}
+    {{ name }}: {{ value.render() }}
+    {% endfor %}
+{% endif %}
+
+
+class BaseRequest(Request):
+{% if dto.headers %}
+    class HeadersSchema(CommonHeadersSchema):
+        ...
+{% else %}
+    ...
+{% endif %}
+
+
+class BaseResponse(Response):
+{% if dto.headers %}
+    class HeadersSchema(CommonHeadersSchema):
+        ...
+{% else %}
+    ...
+{% endif %}
